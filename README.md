@@ -51,11 +51,3 @@ Cada projeto pode ser compilado e carregado no Raspberry Pi Pico W seguindo esta
 - [Documentação do FreeRTOS](https://www.freertos.org/Documentation/RTOS_book.html)
 - [SDK do Raspberry Pi Pico](https://github.com/raspberrypi/pico-sdk)
 
-## 📝 Licença
-
-Este projeto está sob a licença MIT.
-
----
-<div align="center">
-  <p>Desenvolvido com ❤️ para aprendizado e exploração do Raspberry Pi Pico W</p>
-</div>
