@@ -80,7 +80,7 @@ void xTaskExibition(void *pdParamenters){
             display_draw_text_lines(text, 2, 0);
             display_update();
 
-            vTaskDelay(100 / portTICK_PERIOD_MS); // Delay de 100ms
+            vTaskDelay(10 / portTICK_PERIOD_MS); // Delay de 100ms
         }
     }
 }
