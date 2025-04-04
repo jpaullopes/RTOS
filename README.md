@@ -31,6 +31,9 @@ O repositório está organizado em diferentes pastas, cada uma correspondendo a 
 - **[Atividade 01](./atividade01)**: Controle básico de LEDs usando tarefas do FreeRTOS
 - **[Atividade 02](./atividade2)**: Interação entre botões e LEDs usando filas do FreeRTOS
 - **[Atividade 03](./atividade3)**: Controle de buzzer utilizando semáforos do FreeRTOS
+- **[Atividade 04](./atividade4)**: Joystick controla matriz de LEDs e display OLED usando filas e mutex
+- **[Atividade 05](./atividade5)**: Processamento de eventos do joystick com limite usando fila e semáforo de contagem
+- **[Multicore](./multicore)**: Exploração de programação paralela combinando FreeRTOS e os dois núcleos do RP2040
 
 Cada pasta contém seu próprio README com informações detalhadas sobre a atividade.
 
@@ -50,4 +53,13 @@ Cada projeto pode ser compilado e carregado no Raspberry Pi Pico W seguindo esta
 - [Documentação Oficial do Raspberry Pi Pico W](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html)
 - [Documentação do FreeRTOS](https://www.freertos.org/Documentation/RTOS_book.html)
 - [SDK do Raspberry Pi Pico](https://github.com/raspberrypi/pico-sdk)
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT.
+
+---
+<div align="center">
+  <p>Desenvolvido com ❤️ para aprendizado e exploração do Raspberry Pi Pico W</p>
+</div>
 
