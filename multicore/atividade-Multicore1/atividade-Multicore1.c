@@ -74,10 +74,12 @@ void xTaskExibition(void *pdParamenters){
             display_clear();
             char buffer_x[20];
             char buffer_y[20];
+            char buffer_button[20];
+            snprintf(buffer_button, sizeof(buffer_button), "Button: %d", joystick_data_recive.button_pressed);
             snprintf(buffer_x, sizeof(buffer_x), "Val X: %d", joystick_data_recive.x_position);
             snprintf(buffer_y, sizeof(buffer_y), "Val Y: %d", joystick_data_recive.y_position);
-            char *text[] = {buffer_x, buffer_y};
-            display_draw_text_lines(text, 2, 0);
+            char *text[] = {buffer_x, buffer_y , buffer_button};
+            display_draw_text_lines(text, 3, 0);
             display_update();
 
             vTaskDelay(10 / portTICK_PERIOD_MS); // Delay de 100ms

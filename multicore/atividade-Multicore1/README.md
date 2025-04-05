@@ -19,7 +19,8 @@ Esta atividade implementa um sistema multicore no Raspberry Pi Pico W, explorand
 
 - **Divisão de Responsabilidades**: Cada núcleo com funções específicas e otimizadas
 - **FreeRTOS em Ambos os Núcleos**: Gerenciamento independente de tarefas em cada processador
-- **Leitura de Joystick**: Core 0 captura dados do joystick analógico
+- **Leitura de Joystick**: Core 0 captura dados do joystick analógico (posições X/Y e estado do botão)
+- **Otimização de Tipos de Dados**: Uso de `uint8_t` para o estado do botão para melhor eficiência de memória
 - **Exibição no Display**: Core 1 processa e atualiza o display OLED com os valores do joystick
 - **Comunicação via Fila**: Troca de dados entre os núcleos usando filas do FreeRTOS
 
@@ -41,19 +42,26 @@ Esta atividade implementa um sistema multicore no Raspberry Pi Pico W, explorand
 
 1. **Core 0**:
    - Inicialização de todos os módulos do sistema
-   - Tarefa `xTaskJoystick`: Leitura periódica do joystick analógico
+   - Tarefa `xTaskJoystick`: Leitura periódica do joystick analógico (posições X/Y e detecção de clique)
    - Envio dos dados do joystick para uma fila compartilhada
    - Gerenciamento do FreeRTOS para o Core 0
 
 2. **Core 1**:
    - Tarefa `xTaskExibition`: Recebe dados da fila compartilhada
-   - Processa e formata os valores do joystick
+   - Processa e formata os valores do joystick (posição e estado do botão)
    - Atualiza o display OLED com as informações formatadas
    - Gerenciamento do FreeRTOS para o Core 1
 
 ## 🔄 Mecanismos de Comunicação Intercore
 
 ```c
+// Definição da estrutura de dados do joystick com tipo otimizado para o botão
+typedef struct {
+    int x_position;        
+    int y_position;
+    uint8_t button_pressed; // Tipo otimizado: 1 se pressionado, 0 caso contrário      
+} Joystick;
+
 // Criação da fila compartilhada entre os núcleos
 QueueHandle_t xQueueJoytick = xQueueCreate(15, sizeof(Joystick));
 
@@ -64,7 +72,7 @@ if(xQueueSend(xQueueJoytick, &joystick_data, 10 / portMAX_DELAY) != pdPASS){
 
 // Recebimento dos dados no Core 1
 if(xQueueReceive(xQueueJoytick, &joystick_data_recive, 10 / portMAX_DELAY) == pdPASS){
-    // Processamento dos dados recebidos
+    // Processamento dos dados recebidos (X, Y e estado do botão)
     // Atualização do display
 }
 ```
@@ -148,11 +156,15 @@ if(xQueueReceive(xQueueJoytick, &joystick_data_recive, 10 / portMAX_DELAY) == pd
    - Distribuição adequada de tarefas entre os núcleos
    - Evitar que um núcleo fique sobrecarregado enquanto o outro está ocioso
 
-3. **Gerenciamento de Recursos**:
+3. **Otimização de Memória**:
+   - Uso de tipos de dados adequados como `uint8_t` para o botão do joystick
+   - Organização eficiente das estruturas de dados compartilhadas
+
+4. **Gerenciamento de Recursos**:
    - Acesso adequado a recursos compartilhados como I2C para o display
    - Priorização correta das tarefas em cada núcleo
 
-4. **Implementação Futura do Wi-Fi**:
+5. **Implementação Futura do Wi-Fi**:
    - Isolamento das operações Wi-Fi no Core 0 para não interferir no processamento do Core 1
    - Gerenciamento eficiente do consumo de energia durante transmissões
 
